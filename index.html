@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suryansh Sinha — Game Dev · Builder · Creator</title>
+<meta name="description" content="Suryansh Sinha — 3rd Year CSE (Gaming Technology) student. Game developer, rapid prototyper, AI-assisted builder.">
+<meta property="og:title" content="Suryansh Sinha — Game Dev & Builder">
+<meta name="theme-color" content="#000000">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- STARFIELD -->
+<div id="starfield" aria-hidden="true"></div>
+
+<!-- CURSOR -->
+<div id="cursor" aria-hidden="true"></div>
+<div id="cursor-trail" aria-hidden="true"></div>
+
+<!-- LOADER -->
+<div id="loader" role="status">
+  <div class="loader-name">suryansh sinha · portfolio</div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <div class="loader-pct" id="lpct">0%</div>
+</div>
+
+<!-- SCROLL PROGRESS -->
+<div id="progress-bar"></div>
+
+<!-- ======================================================== -->
+<!-- NAV                                                       -->
+<!-- ======================================================== -->
+<nav id="nav">
+  <a href="#" class="nav-logo">suryansh.dev</a>
+  <button class="nav-hamburger" id="ham-btn" aria-label="Toggle menu" aria-expanded="false">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <line x1="3" y1="12" x2="21" y2="12"/>
+      <line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+  <ul class="nav-links nav-links-desktop" id="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://github.com/sinxcos07" target="_blank" rel="noopener" class="nav-cta">GitHub ↗</a></li>
+  </ul>
+  <div class="nav-status">
+    <div class="status-dot"></div>
+    <span>Available</span>
+  </div>
+</nav>
+
+<!-- ======================================================== -->
+<!-- HERO                                                      -->
+<!-- ======================================================== -->
+<section id="hero">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-amb ha1" aria-hidden="true"></div>
+  <div class="hero-amb ha2" aria-hidden="true"></div>
+  <div class="hero-amb ha3" aria-hidden="true"></div>
+  <div id="mouse-light" aria-hidden="true"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="badge-ping" aria-hidden="true"></div>
+      VIT Bhopal · CSE (Gaming Technology) · 3rd Year
+    </div>
+
+    <h1 class="hero-name" id="hero-name">
+      <span class="accent-word">Suryansh</span><br>
+      <span class="dim">Sinha</span>
+    </h1>
+
+    <div class="hero-rotating" aria-label="Builder, Game Developer, Rapid Prototyper, AI-Assisted Creator, UI Experimenter">
+      <span class="rotating-prefix">I'm a</span>
+      <div class="rotating-wrapper" aria-hidden="true">
+        <div class="rotating-text">
+          <span class="rotating-item">Builder</span>
+          <span class="rotating-item">Game Developer</span>
+          <span class="rotating-item">Rapid Prototyper</span>
+          <span class="rotating-item">AI-Assisted Creator</span>
+          <span class="rotating-item">UI Experimenter</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="hero-bio">
+      I enjoy learning by building. I mainly work with game development, experiment with web projects,
+      and rapidly prototype ideas using AI-assisted workflows.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" rx="1"/>
+          <rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/>
+          <rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+        Projects
+      </a>
+      <a href="https://github.com/sinxcos07" target="_blank" rel="noopener" class="btn btn-ghost">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+        </svg>
+        GitHub
+      </a>
+      <a href="https://www.linkedin.com/in/suryansh-sinha/" target="_blank" rel="noopener" class="btn btn-ghost">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+        LinkedIn
+      </a>
+      <a href="mailto:suryanshsinha90@gmail.com" class="btn btn-blue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+        Contact
+      </a>
+    </div>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true">
+    <div class="scroll-line"></div>
+    <span>scroll</span>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ======================================================== -->
+<!-- ABOUT                                                     -->
+<!-- ======================================================== -->
+<section id="about">
+  <div class="section-label reveal">Background</div>
+  <h2 class="section-title reveal">About <span class="muted">me</span></h2>
+  <div class="about-grid">
+    <div>
+      <p class="about-lead reveal">
+        I'm a <strong>game developer and experimenter</strong> who learns best when
+        I'm actually building something — not reading about it.
+      </p>
+      <div class="about-body reveal">
+        <p>
+          I'm doing a <strong>B.Tech in CSE with a Gaming Technology specialisation</strong>
+          at VIT Bhopal. Game dev clicked for me because it forces you to care about physics,
+          AI, rendering, and user feel all at once. That intersection is what keeps me genuinely interested.
+        </p>
+        <p>
+          I know <strong>C++, C#, Python, SQL, HTML, and CSS</strong>. For web stuff I tend to learn
+          sideways — picking up whatever the project needs. I use AI tools to prototype fast and
+          understand unfamiliar tech without getting stuck reading docs for hours.
+        </p>
+        <p>
+          My approach: <strong>ship something real, figure out what broke, rebuild it better</strong>.
+          I care less about knowing the "right" stack and more about whether the thing I'm making
+          actually works and feels good.
+        </p>
+      </div>
+    </div>
+    <div class="about-stack">
+      <div class="about-card reveal rd1">
+        <div class="card-icon">🎮</div>
+        <div class="card-label">Current Study</div>
+        <div class="card-val">B.Tech CSE — Gaming Technology</div>
+        <div class="card-sub">VIT Bhopal University · 3rd Year · 2024–2028</div>
+      </div>
+      <div class="about-card reveal rd2">
+        <div class="card-icon">🔬</div>
+        <div class="card-label">Experience</div>
+        <div class="card-val">Intern — IIT Delhi</div>
+        <div class="card-sub">Research environment · practical workflows · technical problem-solving</div>
+      </div>
+      <div class="about-card reveal rd3">
+        <div class="card-icon">⚡</div>
+        <div class="card-label">Philosophy</div>
+        <div class="card-val">Ship first, refine second</div>
+        <div class="card-sub">Learn by doing · prototype fast · use AI to fill gaps quickly</div>
+      </div>
+      <div class="about-card reveal rd4" style="border-color:rgba(31,217,122,0.16)">
+        <div class="card-label">
+          <span style="width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);display:inline-block"></span>
+          &nbsp;Status
+        </div>
+        <div class="card-val">Open to opportunities</div>
+        <div class="card-sub">Internships · game dev collabs · interesting side projects</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================== -->
+<!-- CURRENT EXPERIMENTS                                       -->
+<!-- ======================================================== -->
+<section id="experiments" style="padding-top:0">
+  <div class="section-label reveal">Active</div>
+  <h2 class="section-title reveal" style="margin-bottom:32px">Current <span class="muted">Experiments</span></h2>
+  <div class="exp-grid">
+    <div class="exp-item reveal rd1">
+      <div class="exp-dot blue"></div>
+      <div>
+        <div class="exp-title">Unreal Engine Combat System</div>
+        <div class="exp-sub">Experimenting with enemy AI state machines, melee feel, and responsive player controls in UE5</div>
+      </div>
+    </div>
+    <div class="exp-item reveal rd2">
+      <div class="exp-dot purple"></div>
+      <div>
+        <div class="exp-title">Cinematic Game UI Concepts</div>
+        <div class="exp-sub">Designing diegetic HUD systems — making UI feel part of the world, not pasted on top</div>
+      </div>
+    </div>
+    <div class="exp-item reveal rd3">
+      <div class="exp-dot green"></div>
+      <div>
+        <div class="exp-title">AI-Assisted Rapid Prototyping</div>
+        <div class="exp-sub">Exploring how far you can push from idea → working demo using AI tools intelligently</div>
+      </div>
+    </div>
+    <div class="exp-item reveal rd4">
+      <div class="exp-dot amber"></div>
+      <div>
+        <div class="exp-title">Web Experiments</div>
+        <div class="exp-sub">Small tools and interactive interfaces — learning through making rather than reading</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ======================================================== -->
+<!-- EXPERIENCE & EDUCATION                                    -->
+<!-- ======================================================== -->
+<section id="experience">
+  <div class="section-label reveal">Timeline</div>
+  <h2 class="section-title reveal">Experience & <span class="muted">Education</span></h2>
+  <div class="timeline">
+
+    <article class="timeline-card reveal">
+      <div>
+        <div class="tc-role">Intern</div>
+        <div class="tc-org">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+          </svg>
+          IIT Delhi
+        </div>
+        <div class="tc-desc">
+          Worked in a professional research environment. Got real exposure to structured workflows,
+          collaborative technical problem-solving, and navigating a high-expectation environment.
+        </div>
+        <span class="tc-badge badge-blue">Professional Experience</span>
+      </div>
+      <div class="tc-date">Research Internship</div>
+    </article>
+
+    <article class="timeline-card reveal rd1">
+      <div>
+        <div class="tc-role">B.Tech — Computer Science & Engineering</div>
+        <div class="tc-org">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+          VIT Bhopal University
+        </div>
+        <div class="tc-desc">
+          Specialising in Gaming Technology. Focused on game development, AI systems,
+          and the creative-technical overlap that game engines demand.
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+          <span class="tc-badge badge-purple">Gaming Technology Specialisation</span>
+          <span class="tc-badge badge-green">2024–2028</span>
+        </div>
+      </div>
+      <div class="tc-date">3rd Year · Current</div>
+    </article>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ======================================================== -->
+<!-- SKILLS                                                    -->
+<!-- ======================================================== -->
+<section id="skills">
+  <div class="section-label reveal">Toolkit</div>
+  <h2 class="section-title reveal">Skills & <span class="muted">Technologies</span></h2>
+  <div class="skills-grid">
+
+    <div class="skill-group reveal">
+      <div class="sg-label"><span class="sg-icon">⌨️</span> Languages</div>
+      <div class="skill-tags">
+        <span class="skill-tag">C++</span>
+        <span class="skill-tag">C#</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">HTML</span>
+        <span class="skill-tag">CSS</span>
+        <span class="skill-tag">JavaScript</span>
+      </div>
+    </div>
+
+    <div class="skill-group reveal rd1">
+      <div class="sg-label"><span class="sg-icon">🎮</span> Game Development</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Unity</span>
+        <span class="skill-tag">Unreal Engine 5</span>
+        <span class="skill-tag">Game Physics</span>
+        <span class="skill-tag">Enemy AI</span>
+        <span class="skill-tag">Blueprints</span>
+        <span class="skill-tag">Gameplay Systems</span>
+        <span class="skill-tag">Level Design</span>
+      </div>
+    </div>
+
+    <div class="skill-group reveal rd2">
+      <div class="sg-label"><span class="sg-icon">🛠️</span> Tools & Concepts</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Git / GitHub</span>
+        <span class="skill-tag">UI/UX Design</span>
+        <span class="skill-tag">AI-Assisted Dev</span>
+        <span class="skill-tag">Rapid Prototyping</span>
+        <span class="skill-tag">Problem Solving</span>
+        <span class="skill-tag">OOP</span>
+        <span class="skill-tag">Data Structures</span>
+      </div>
+    </div>
+
+    <div class="skill-group reveal rd3">
+      <div class="sg-label"><span class="sg-icon">📐</span> Currently Learning</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Shader Programming</span>
+        <span class="skill-tag">HLSL</span>
+        <span class="skill-tag">VFX / Particle Systems</span>
+        <span class="skill-tag">Procedural Generation</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ======================================================== -->
+<!-- PROJECTS                                                  -->
+<!-- ======================================================== -->
+<section id="projects">
+  <div class="projects-header">
+    <div>
+      <div class="section-label reveal">Work</div>
+      <h2 class="section-title reveal">Projects & <span class="muted">Builds</span></h2>
+    </div>
+    <a href="https://github.com/sinxcos07" target="_blank" rel="noopener"
+       class="btn btn-ghost reveal" style="flex-shrink:0;align-self:flex-end;margin-bottom:60px">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+      </svg>
+      All on GitHub ↗
+    </a>
+  </div>
+
+  <!-- AstroFit — Featured -->
+  <article class="project-featured reveal">
+    <div class="pf-visual">
+      <div class="pf-thumb">
+        <div class="pf-stars" id="pf-stars-1"></div>
+        <div class="pf-thumb-orb"></div>
+        <div class="pf-thumb-title">AstroFit</div>
+        <div class="pf-thumb-sub">Fitness · Astrology · Gamification</div>
+      </div>
+      <div class="pf-live-badge">Live ↗</div>
+    </div>
+    <div class="pf-info">
+      <div class="pf-tag">★ Featured · Hackathon</div>
+      <h3 class="pf-name">AstroFit</h3>
+      <p class="pf-desc">
+        Hackathon project combining fitness tracking and astrology with gamification mechanics.
+        The challenge was making two unexpected domains feel cohesive and genuinely fun —
+        not just gimmicky. Modern UI experimentation throughout.
+      </p>
+      <div class="pf-stack">
+        <span class="pf-tag-sm">Web</span>
+        <span class="pf-tag-sm">Gamification</span>
+        <span class="pf-tag-sm">UI Design</span>
+        <span class="pf-tag-sm">Hackathon</span>
+      </div>
+      <div class="pf-links">
+        <a href="https://astrofit-fitness.vercel.app/" target="_blank" rel="noopener" class="pf-link pf-link-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+            <polyline points="15 3 21 3 21 9"/>
+            <line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+          View Live
+        </a>
+        <a href="https://github.com/sinxcos07" target="_blank" rel="noopener" class="pf-link pf-link-ghost">
+          Source ↗
+        </a>
+      </div>
+    </div>
+  </article>
+
+  <!-- Hidden Collector Game — Featured -->
+  <article class="project-hidden-collector reveal">
+    <div class="hc-visual">
+      <div class="hc-thumb">
+        <div class="hc-icon">🔍</div>
+        <div class="hc-thumb-title">Hidden Collector</div>
+        <div class="hc-thumb-sub">Game · Find & Collect</div>
+      </div>
+    </div>
+    <div class="hc-info">
+      <div class="pf-tag" style="background:rgba(31,217,122,0.07);border-color:rgba(31,217,122,0.2);color:var(--green)">
+        🎮 Game Project
+      </div>
+      <h3 class="pf-name">Hidden Collector</h3>
+      <p class="pf-desc">
+        A game built around finding hidden objects scattered across environments. Focused on
+        exploration mechanics, object interaction systems, and the satisfying feel of discovery —
+        the kind of game feel that's deceptively hard to get right.
+      </p>
+      <div class="pf-stack">
+        <span class="pf-tag-sm">Unity</span>
+        <span class="pf-tag-sm">C#</span>
+        <span class="pf-tag-sm">Game Design</span>
+        <span class="pf-tag-sm">Interaction Systems</span>
+      </div>
+      <div class="pf-links">
+        <a href="https://sinxcos07.itch.io/hiddencollector" target="_blank" rel="noopener" class="pf-link pf-link-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+            <polyline points="15 3 21 3 21 9"/>
+            <line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+          View Live
+        </a>
+        <a href="https://github.com/sinxcos07" target="_blank" rel="noopener" class="pf-link pf-link-ghost">
+          View on GitHub ↗
+        </a>
+      </div>
+    </div>
+  </article>
+
+  <!-- GitHub Repos Carousel -->
+  <div class="gh-section reveal">
+    <div class="gh-header">
+      <div class="gh-title">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="color:var(--text3)">
+          <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+        </svg>
+        More from GitHub
+        <span class="gh-count" id="gh-count"></span>
+      </div>
+      <div class="gh-arrow-wrap">
+        <button class="gh-arrow" id="gh-prev" aria-label="Previous repos" disabled>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <button class="gh-arrow" id="gh-next" aria-label="Next repos" disabled>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div id="gh-loading" class="gh-loading">
+      <span>Fetching GitHub repos</span>
+      <div class="loading-dots"><span></span><span></span><span></span></div>
+    </div>
+    <div class="gh-carousel-wrap">
+      <div class="gh-carousel" id="gh-carousel"></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ======================================================== -->
+<!-- CONTACT                                                   -->
+<!-- ======================================================== -->
+<section id="contact">
+  <div class="section-label reveal">Get in touch</div>
+  <h2 class="section-title reveal" style="margin-bottom:20px">Contact</h2>
+  <p class="contact-intro reveal">
+    Happy to chat about game dev, interesting projects, or just exchange ideas. Find me here:
+  </p>
+  <div class="contact-grid">
+
+    <a href="https://github.com/sinxcos07" target="_blank" rel="noopener" class="contact-card cc-github reveal">
+      <div class="cc-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color:var(--text2)">
+          <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+        </svg>
+      </div>
+      <div class="cc-text">
+        <div class="cc-label">GitHub</div>
+        <div class="cc-val">sinxcos07</div>
+      </div>
+    </a>
+
+    <a href="https://www.linkedin.com/in/suryansh-sinha/" target="_blank" rel="noopener" class="contact-card cc-linkedin reveal rd1">
+      <div class="cc-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color:var(--blue)">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+      </div>
+      <div class="cc-text">
+        <div class="cc-label">LinkedIn</div>
+        <div class="cc-val">Suryansh Sinha</div>
+      </div>
+    </a>
+
+    <a href="mailto:suryanshsinha90@gmail.com" class="contact-card cc-email reveal rd2">
+      <div class="cc-icon" style="flex-shrink:0">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--amber)">
+          <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+      </div>
+      <div class="cc-text">
+        <div class="cc-label">Email</div>
+        <div class="cc-val" style="font-size:12.5px" title="suryanshsinha90@gmail.com">suryanshsinha90@gmail.com</div>
+      </div>
+    </a>
+
+    <a href="#" class="contact-card cc-resume reveal rd3">
+      <div class="cc-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--purple)">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="12" y1="18" x2="12" y2="12"/>
+          <polyline points="9 15 12 18 15 15"/>
+        </svg>
+      </div>
+      <div class="cc-text">
+        <div class="cc-label">Resume</div>
+        <div class="cc-val">Download PDF</div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ======================================================== -->
+<!-- FOOTER                                                    -->
+<!-- ======================================================== -->
+<footer>
+  <div class="footer-left">© 2026 Suryansh Sinha · Built with curiosity and too many late nights</div>
+  <div class="footer-right">
+    <a href="https://github.com/sinxcos07" target="_blank" rel="noopener">GitHub</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<!-- ======================================================== -->
+<!-- JAVASCRIPT                                                -->
+<!-- ======================================================== -->
+<script src="main.js"></script>
+</body>
+</html>
