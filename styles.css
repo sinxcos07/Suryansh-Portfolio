@@ -54,10 +54,18 @@ body{
 }
 .star{
   position:absolute;border-radius:50%;
-  background:radial-gradient(circle,rgba(255,255,255,0.9) 0%,rgba(200,180,255,0.4) 60%,transparent 100%);
-  animation:twinkle var(--d,6s) var(--delay,0s) ease-in-out infinite alternate;
+  background:radial-gradient(circle,rgba(255,255,255,1) 0%,rgba(255,255,255,0.8) 40%,rgba(220,200,255,0.4) 70%,transparent 100%);
+  animation:twinkle var(--d,6s) var(--delay,0s) cubic-bezier(0.4,0,0.6,1) infinite;
+  filter:drop-shadow(0 0 1px rgba(255,255,255,0.3));
 }
-@keyframes twinkle{0%{opacity:var(--min,0.03)}100%{opacity:var(--max,0.18)}}
+@keyframes twinkle{
+  0%{opacity:var(--min,0.15)}
+  10%{opacity:var(--max,0.6)}
+  20%{opacity:var(--min,0.15)}
+  30%{opacity:var(--max,0.5)}
+  50%{opacity:var(--min,0.15)}
+  100%{opacity:var(--max,0.6)}
+}
 
 /* ---- CUSTOM CURSOR ---------------------------------------- */
 #cursor{
@@ -245,6 +253,7 @@ nav.scrolled{
   display:flex;align-items:center;gap:10px;
   font-family:var(--mono);font-size:clamp(10px,1.3vw,11px);color:var(--text3);letter-spacing:.1em;
   opacity:0;animation:fadeUp 1s 1.8s ease forwards;
+  transition:opacity .4s ease-out;
 }
 .scroll-line{width:40px;height:1px;background:var(--text3);position:relative;overflow:hidden}
 .scroll-line::after{
@@ -425,7 +434,11 @@ section{padding:clamp(60px,12vw,110px) clamp(16px,4vw,72px);position:relative;z-
   100%{transform:scale(1.08);box-shadow:0 0 60px rgba(90,158,255,0.5),0 0 100px rgba(176,136,255,0.2)}
 }
 .pf-stars{position:absolute;inset:0;pointer-events:none}
-.pf-star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--d,4s) var(--delay,0s) ease-in-out infinite alternate}
+.pf-star{
+  position:absolute;background:#fff;border-radius:50%;
+  animation:twinkle var(--d,4s) var(--delay,0s) cubic-bezier(0.4,0,0.6,1) infinite;
+  filter:drop-shadow(0 0 0.5px rgba(255,255,255,0.2));
+}
 .pf-live-badge{
   position:absolute;top:16px;right:16px;padding:4px 12px;border-radius:100px;
   background:rgba(31,217,122,0.1);border:1px solid rgba(31,217,122,0.25);

@@ -11,10 +11,10 @@
     const s = document.createElement('div');
     s.className = 'star';
     const size = Math.random() < 0.75 ? 1 : Math.random() < 0.6 ? 1.5 : 2;
-    const minOp = (Math.random() * 0.02 + 0.02).toFixed(3);
-    const maxOp = (Math.random() * 0.12 + 0.06).toFixed(3);
-    const dur = (Math.random() * 5 + 4).toFixed(1);
-    const delay = (Math.random() * 8).toFixed(1);
+    const minOp = (Math.random() * 0.15 + 0.1).toFixed(3);
+    const maxOp = (Math.random() * 0.35 + 0.35).toFixed(3);
+    const dur = (Math.random() * 4 + 3).toFixed(1);
+    const delay = (Math.random() * 6).toFixed(1);
     s.style.cssText = `left:${Math.random() * 100}%;top:${Math.random() * 100}%;` +
       `width:${size}px;height:${size}px;` +
       `--d:${dur}s;--delay:${delay}s;--min:${minOp};--max:${maxOp}`;
@@ -31,7 +31,7 @@
       s.style.cssText = `left:${Math.random() * 100}%;top:${Math.random() * 100}%;` +
         `width:${sz}px;height:${sz}px;` +
         `--d:${(3 + Math.random() * 4).toFixed(1)}s;--delay:${(Math.random() * 5).toFixed(1)}s;` +
-        `--min:0.04;--max:0.45`;
+        `--min:0.15;--max:0.6`;
       pfStars.appendChild(s);
     }
   }
@@ -85,10 +85,22 @@
 /* ---- SCROLL PROGRESS + NAV -------------------------------- */
 const prog = document.getElementById('progress-bar');
 const nav = document.getElementById('nav');
+const scrollHint = document.querySelector('.scroll-hint');
 window.addEventListener('scroll', () => {
   const d = document.documentElement;
   prog.style.width = (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
   nav.classList.toggle('scrolled', d.scrollTop > 30);
+  
+  // Fade out scroll hint when user scrolls
+  if (scrollHint) {
+    if (d.scrollTop > 100) {
+      scrollHint.style.opacity = '0';
+      scrollHint.style.pointerEvents = 'none';
+    } else {
+      scrollHint.style.opacity = '';
+      scrollHint.style.pointerEvents = '';
+    }
+  }
 }, { passive: true });
 
 /* ---- MOBILE NAV ------------------------------------------- */
