@@ -93,7 +93,7 @@ window.addEventListener('scroll', () => {
   
   // Fade out scroll hint when user scrolls
   if (scrollHint) {
-    if (d.scrollTop > 100) {
+    if (d.scrollTop > 220) {
       scrollHint.style.opacity = '0';
       scrollHint.style.pointerEvents = 'none';
     } else {
