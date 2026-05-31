@@ -242,13 +242,13 @@ nav.scrolled{
 @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 
 .scroll-hint{
-  position:absolute;bottom:clamp(28px,4vw,44px);left:clamp(16px,4vw,72px);z-index:3;
   display:flex;align-items:center;gap:14px;
-  font-family:var(--mono);font-size:14px;color:rgba(255,255,255,0.78);letter-spacing:.18em;text-transform:uppercase;
+  margin-top:clamp(36px,6vw,52px);
+  font-family:var(--mono);font-size:13px;color:rgba(255,255,255,0.65);letter-spacing:.18em;text-transform:uppercase;
   opacity:0;animation:fadeUp 1s 2s ease forwards;
   transition:opacity .5s ease-out;
 }
-.scroll-line{width:52px;height:1.5px;background:rgba(255,255,255,0.55);position:relative;overflow:hidden}
+.scroll-line{width:52px;height:1px;background:rgba(255,255,255,0.45);position:relative;overflow:hidden}
 .scroll-line::after{
   content:'';position:absolute;top:0;bottom:0;left:-100%;width:100%;
   background:var(--blue);animation:scanline 2.2s 2.2s ease-in-out infinite;
