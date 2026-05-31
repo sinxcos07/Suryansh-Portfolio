@@ -74,15 +74,8 @@ body{
   transition:width .22s var(--expo),height .22s var(--expo),background .22s;
   mix-blend-mode:difference;will-change:transform;
 }
-#cursor-trail{
-  position:fixed;width:34px;height:34px;
-  border:1px solid rgba(90,158,255,0.45);border-radius:50%;
-  pointer-events:none;z-index:99998;transform:translate(-50%,-50%);
-  transition:width .38s var(--expo),height .38s var(--expo),border-color .25s;
-  will-change:transform;
-}
+#cursor-trail{display:none}
 body.ch #cursor{width:6px;height:6px;background:var(--blue)}
-body.ch #cursor-trail{width:48px;height:48px;border-color:rgba(90,158,255,0.7)}
 body.cc #cursor{transform:translate(-50%,-50%) scale(0.55)}
 @media(max-width:768px){#cursor,#cursor-trail{display:none}}
 
@@ -250,12 +243,12 @@ nav.scrolled{
 
 .scroll-hint{
   position:absolute;bottom:clamp(24px,4vw,36px);left:clamp(16px,4vw,72px);z-index:0;
-  display:flex;align-items:center;gap:10px;
-  font-family:var(--mono);font-size:clamp(10px,1.3vw,11px);color:var(--text3);letter-spacing:.1em;
+  display:flex;align-items:center;gap:12px;
+  font-family:var(--mono);font-size:clamp(12px,1.5vw,13px);color:var(--text2);letter-spacing:.14em;
   opacity:0;animation:fadeUp 1s 1.8s ease forwards;
   transition:opacity .4s ease-out;
 }
-.scroll-line{width:40px;height:1px;background:var(--text3);position:relative;overflow:hidden}
+.scroll-line{width:48px;height:1px;background:var(--text2);position:relative;overflow:hidden}
 .scroll-line::after{
   content:'';position:absolute;top:0;bottom:0;left:-100%;width:100%;
   background:var(--blue);animation:scanline 2.2s 2.2s ease-in-out infinite;
