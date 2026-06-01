@@ -213,7 +213,7 @@ nav.scrolled{
   opacity:0;animation:fadeUp .8s .72s var(--expo) forwards;
   flex-wrap:wrap;row-gap:0;
 }
-.rotating-prefix{font-size:clamp(15px,2vw,20px);color:var(--text3);font-weight:300}
+.rotating-prefix{font-size:clamp(15px,2vw,20px);color:#b088ff;font-weight:300}
 .rotating-wrapper{overflow:hidden;height:clamp(24px,2.6vw,30px);position:relative}
 .rotating-text{display:flex;flex-direction:column;animation:rotateText 10s ease-in-out infinite}
 .rotating-item{
@@ -244,7 +244,7 @@ nav.scrolled{
 .scroll-hint{
   display:flex;align-items:center;gap:14px;
   margin-top:clamp(36px,6vw,52px);
-  font-family:var(--mono);font-size:13px;color:rgba(255,255,255,0.65);letter-spacing:.18em;text-transform:uppercase;
+  font-family:var(--mono);font-size:13px;color:#B088FF;letter-spacing:.18em;text-transform:uppercase;
   opacity:0;animation:fadeUp 1s 2s ease forwards;
   transition:opacity .5s ease-out;
 }
