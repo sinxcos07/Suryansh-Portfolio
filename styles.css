@@ -403,35 +403,22 @@ section{padding:clamp(60px,12vw,110px) clamp(16px,4vw,72px);position:relative;z-
   display:flex;align-items:center;justify-content:center;
 }
 .pf-thumb{
-  position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse 60% 50% at 50% 40%,rgba(90,158,255,0.18) 0%,transparent 60%),
-    radial-gradient(ellipse 40% 60% at 70% 70%,rgba(176,136,255,0.12) 0%,transparent 55%),
-    linear-gradient(145deg,#060018 0%,#0b0430 60%,#060018 100%);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:clamp(20px,4vw,32px);
+  position:absolute;
+  inset:0;
+  overflow:hidden;
 }
-.pf-thumb-title{
-  font-size:clamp(24px,5vw,32px);font-weight:700;letter-spacing:-.03em;
-  background:linear-gradient(135deg,#fff,rgba(176,136,255,0.9));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+.pf-thumb-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:transform .5s ease;
 }
-.pf-thumb-sub{font-family:var(--mono);font-size:clamp(10px,1.5vw,11px);letter-spacing:.14em;color:rgba(255,255,255,0.3);text-transform:uppercase}
-.pf-thumb-orb{
-  width:clamp(60px,10vw,80px);height:clamp(60px,10vw,80px);border-radius:50%;
-  background:radial-gradient(circle,rgba(90,158,255,0.4),rgba(176,136,255,0.2),transparent 70%);
-  box-shadow:0 0 40px rgba(90,158,255,0.3),0 0 80px rgba(176,136,255,0.15);
-  animation:orb-pulse 3s ease-in-out infinite alternate;
+
+.project-featured:hover .pf-thumb-img{
+  transform:scale(1.04);
 }
-@keyframes orb-pulse{
-  0%{transform:scale(1);box-shadow:0 0 40px rgba(90,158,255,0.3)}
-  100%{transform:scale(1.08);box-shadow:0 0 60px rgba(90,158,255,0.5),0 0 100px rgba(176,136,255,0.2)}
-}
-.pf-stars{position:absolute;inset:0;pointer-events:none}
-.pf-star{
-  position:absolute;background:#fff;border-radius:50%;
-  animation:twinkle var(--d,4s) var(--delay,0s) cubic-bezier(0.4,0,0.6,1) infinite;
-  filter:drop-shadow(0 0 0.5px rgba(255,255,255,0.2));
-}
+
 .pf-live-badge{
   position:absolute;top:16px;right:16px;padding:4px 12px;border-radius:100px;
   background:rgba(31,217,122,0.1);border:1px solid rgba(31,217,122,0.25);
@@ -475,21 +462,22 @@ section{padding:clamp(60px,12vw,110px) clamp(16px,4vw,72px);position:relative;z-
   display:flex;align-items:center;justify-content:center;
 }
 .hc-thumb{
-  position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse 55% 55% at 50% 50%,rgba(31,217,122,0.15) 0%,transparent 60%),
-    radial-gradient(ellipse 40% 40% at 30% 70%,rgba(90,158,255,0.1) 0%,transparent 50%),
-    linear-gradient(145deg,#030212,#080320);
-  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;padding:clamp(20px,4vw,32px);
+  position:absolute;
+  inset:0;
+  overflow:hidden;
 }
-.hc-icon{font-size:clamp(40px,8vw,56px);filter:drop-shadow(0 0 24px rgba(31,217,122,0.5));animation:float 3s ease-in-out infinite alternate}
-@keyframes float{0%{transform:translateY(0)}100%{transform:translateY(-10px)}}
-.hc-thumb-title{
-  font-size:clamp(20px,4vw,26px);font-weight:700;letter-spacing:-.025em;
-  background:linear-gradient(135deg,#fff,rgba(31,217,122,0.85));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+.hc-thumb-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:transform .5s ease;
 }
-.hc-thumb-sub{font-family:var(--mono);font-size:clamp(9px,1.2vw,10px);letter-spacing:.14em;color:rgba(255,255,255,0.28);text-transform:uppercase}
+
+.project-hidden-collector:hover .hc-thumb-img{
+  transform:scale(1.04);
+}
+
 .hc-info{padding:clamp(24px,4vw,36px);display:flex;flex-direction:column;justify-content:center}
 @media(max-width:860px){.hc-info{padding:clamp(20px,3vw,28px)}}
 
