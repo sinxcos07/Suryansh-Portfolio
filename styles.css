@@ -277,10 +277,10 @@ nav.scrolled{
 section{padding:clamp(60px,12vw,110px) clamp(16px,4vw,72px);position:relative;z-index:1}
 .section-label{
   font-family:var(--mono);font-size:clamp(10px,1.5vw,11px);letter-spacing:.16em;
-  color:var(--text3);text-transform:uppercase;margin-bottom:10px;
+  color:#b088ff;text-transform:uppercase;margin-bottom:10px;
   display:flex;align-items:center;gap:12px;
 }
-.section-label::before{content:'';width:24px;height:1px;background:var(--text3)}
+.section-label::before{content:'';width:24px;height:1px;background:#b088ff}
 .section-title{
   font-size:clamp(28px,5vw,58px);font-weight:700;
   letter-spacing:-.03em;line-height:1.04;margin-bottom:clamp(40px,8vw,64px);
