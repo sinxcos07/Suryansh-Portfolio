@@ -239,23 +239,67 @@ const prevBtn = document.getElementById('gh-prev');
 const nextBtn = document.getElementById('gh-next');
 const cardsVisible = () => window.innerWidth < 640 ? 1 : window.innerWidth < 1024 ? 2 : 3;
 
+let ghPixelOffset = 0;
+
+function ghMaxOffset() {
+  if (!carousel.children.length) return 0;
+  const wrap = carousel.parentElement;
+  return Math.max(0, carousel.scrollWidth - wrap.offsetWidth);
+}
+
+function applyGhOffset(px) {
+  ghPixelOffset = Math.max(0, Math.min(px, ghMaxOffset()));
+  carousel.style.transform = `translateX(-${ghPixelOffset}px)`;
+  prevBtn.disabled = ghPixelOffset <= 1;
+  nextBtn.disabled = ghPixelOffset >= ghMaxOffset() - 1;
+}
+
 function updateCarousel() {
   if (!ghRepos.length) return;
-  const cardW = carousel.children[0]?.offsetWidth || 280;
-  carousel.style.transform = `translateX(-${carouselIdx * (cardW + 14)}px)`;
-  const maxIdx = ghRepos.length - cardsVisible();
-  prevBtn.disabled = carouselIdx <= 0;
-  nextBtn.disabled = carouselIdx >= maxIdx;
+  applyGhOffset(ghPixelOffset);
+  // keep carouselIdx in sync for compat
+  const cardW = (carousel.children[0]?.offsetWidth || 280) + 14;
+  carouselIdx = Math.round(ghPixelOffset / cardW);
 }
 
 prevBtn.addEventListener('click', () => {
-  if (carouselIdx > 0) { carouselIdx--; updateCarousel(); }
+  const cardW = (carousel.children[0]?.offsetWidth || 280) + 14;
+  applyGhOffset(ghPixelOffset - cardW * 2);
 });
 nextBtn.addEventListener('click', () => {
-  const maxIdx = ghRepos.length - cardsVisible();
-  if (carouselIdx < maxIdx) { carouselIdx++; updateCarousel(); }
+  const cardW = (carousel.children[0]?.offsetWidth || 280) + 14;
+  applyGhOffset(ghPixelOffset + cardW * 2);
 });
-window.addEventListener('resize', updateCarousel, { passive: true });
+window.addEventListener('resize', () => applyGhOffset(ghPixelOffset), { passive: true });
+
+// Touch swipe for GH carousel
+(function() {
+  let touchStartX = 0, touchStartOff = 0;
+  const getWrap = () => carousel.parentElement;
+  const attachOnce = () => {
+    const w = getWrap();
+    if (!w || w._ghTouch) return;
+    w._ghTouch = true;
+    w.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+      touchStartOff = ghPixelOffset;
+    }, { passive: true });
+    w.addEventListener('touchmove', e => {
+      const dx = touchStartX - e.touches[0].clientX;
+      applyGhOffset(touchStartOff + dx);
+    }, { passive: true });
+    // Trackpad: smooth pixel scroll
+    w.addEventListener('wheel', e => {
+      if (Math.abs(e.deltaX) < 2 && Math.abs(e.deltaY) >= Math.abs(e.deltaX)) return;
+      e.preventDefault();
+      // Use deltaX first; fall back to deltaY for single-axis trackpads
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY * 0.4;
+      applyGhOffset(ghPixelOffset + delta);
+    }, { passive: false });
+  };
+  // attach after repos load — expose helper
+  window._ghAttachScroll = attachOnce;
+})();
 
 function esc(s) {
   const d = document.createElement('div');
@@ -301,6 +345,7 @@ async function fetchGH() {
     prevBtn.disabled = true;
     nextBtn.disabled = ghRepos.length <= cardsVisible();
     updateCarousel();
+    if (window._ghAttachScroll) window._ghAttachScroll();
   } catch (e) {
     const el = document.getElementById('gh-loading');
     if (el) el.textContent = 'Could not load repos — visit github.com/sinxcos07';
@@ -380,34 +425,3 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   initSkillScroll('pt-track', 'pt-prev', 'pt-next');
 })();
 
-/* ---- GH CAROUSEL TOUCH / TRACKPAD SWIPE ------------------ */
-(function () {
-  const carousel = document.getElementById('gh-carousel');
-  const wrap = carousel?.parentElement;
-  if (!wrap || !carousel) return;
-
-  let startX = 0, startIdx = 0;
-
-  // Touch swipe
-  wrap.addEventListener('touchstart', e => {
-    startX = e.touches[0].clientX;
-    startIdx = carouselIdx;
-  }, { passive: true });
-
-  wrap.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - startX;
-    if (Math.abs(dx) < 30) return;
-    const maxIdx = ghRepos.length - cardsVisible();
-    if (dx < 0 && carouselIdx < maxIdx) { carouselIdx++; updateCarousel(); }
-    if (dx > 0 && carouselIdx > 0) { carouselIdx--; updateCarousel(); }
-  }, { passive: true });
-
-  // Trackpad horizontal scroll
-  wrap.addEventListener('wheel', e => {
-    if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) return;
-    e.preventDefault();
-    const maxIdx = ghRepos.length - cardsVisible();
-    if (e.deltaX > 18 && carouselIdx < maxIdx) { carouselIdx++; updateCarousel(); }
-    if (e.deltaX < -18 && carouselIdx > 0) { carouselIdx--; updateCarousel(); }
-  }, { passive: false });
-})();
