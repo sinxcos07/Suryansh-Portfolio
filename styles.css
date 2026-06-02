@@ -591,3 +591,57 @@ a{cursor:none}
 @media(max-width:768px){a,button{cursor:pointer}}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
 html{scroll-behavior:smooth}
+
+/* ---- SKILL SCROLL ROWS ------------------------------------ */
+.skill-scroll-section{
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  padding:clamp(16px,2.5vw,24px) clamp(16px,3vw,28px);
+}
+.skill-scroll-header{
+  display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;
+}
+.skill-scroll-arrows{display:flex;gap:8px}
+.skill-arrow{
+  width:32px;height:32px;border-radius:8px;border:1px solid var(--border2);
+  background:var(--surface2);color:var(--text2);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:background .2s,border-color .2s,opacity .2s;flex-shrink:0;
+}
+.skill-arrow:hover:not(:disabled){background:var(--surface3);border-color:var(--border3)}
+.skill-arrow:disabled{opacity:0.3;cursor:default}
+@media(max-width:768px){.skill-arrow{cursor:pointer}}
+
+.skill-scroll-wrap{
+  overflow:hidden;position:relative;
+}
+.skill-scroll-track{
+  display:flex;gap:10px;
+  transition:transform .38s cubic-bezier(0.16,1,0.3,1);
+  will-change:transform;
+  /* allow trackpad/touch scrolling natively but hidden scrollbar */
+  touch-action:pan-x;
+}
+.skill-scroll-card{
+  flex:0 0 auto;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  width:clamp(90px,14vw,110px);
+  padding:14px 10px;
+  background:var(--surface2);border:1px solid var(--border);border-radius:12px;
+  transition:background .2s,border-color .2s,transform .2s;
+  cursor:default;
+}
+.skill-scroll-card:hover{
+  background:var(--surface3);border-color:var(--border2);transform:translateY(-2px);
+}
+.skill-scroll-icon{font-size:22px;line-height:1}
+.skill-scroll-name{
+  font-size:clamp(10px,1.4vw,12px);font-weight:500;color:var(--text2);
+  text-align:center;line-height:1.3;font-family:var(--mono);letter-spacing:.02em;
+}
+
+/* ---- GH CAROUSEL TOUCH/TRACKPAD FIX ---------------------- */
+.gh-carousel-wrap{
+  overflow-x:hidden;
+  /* allow native horizontal swipe on touch & trackpad */
+  -webkit-overflow-scrolling:touch;
+}

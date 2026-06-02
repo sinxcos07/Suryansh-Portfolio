@@ -320,3 +320,94 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     }
   });
 });
+
+/* ---- SKILL SCROLL ROWS ------------------------------------ */
+(function () {
+  function initSkillScroll(trackId, prevId, nextId) {
+    const track = document.getElementById(trackId);
+    const prev = document.getElementById(prevId);
+    const next = document.getElementById(nextId);
+    if (!track || !prev || !next) return;
+
+    const STEP = () => {
+      const card = track.querySelector('.skill-scroll-card');
+      return card ? card.offsetWidth + 10 : 120;
+    };
+    let offset = 0;
+
+    function maxOffset() {
+      return Math.max(0, track.scrollWidth - track.parentElement.offsetWidth);
+    }
+
+    function apply(newOff) {
+      offset = Math.max(0, Math.min(newOff, maxOffset()));
+      track.style.transform = `translateX(-${offset}px)`;
+      prev.disabled = offset <= 0;
+      next.disabled = offset >= maxOffset() - 1;
+    }
+
+    prev.addEventListener('click', () => apply(offset - STEP() * 2));
+    next.addEventListener('click', () => apply(offset + STEP() * 2));
+    window.addEventListener('resize', () => apply(offset), { passive: true });
+
+    // Touch / trackpad swipe
+    let startX = 0, startOff = 0, dragging = false;
+    const wrap = track.parentElement;
+
+    wrap.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+      startOff = offset;
+      dragging = true;
+    }, { passive: true });
+    wrap.addEventListener('touchmove', e => {
+      if (!dragging) return;
+      apply(startOff - (e.touches[0].clientX - startX));
+    }, { passive: true });
+    wrap.addEventListener('touchend', () => { dragging = false; }, { passive: true });
+
+    // Trackpad / mouse wheel horizontal scroll
+    wrap.addEventListener('wheel', e => {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        e.preventDefault();
+        apply(offset + e.deltaX);
+      }
+    }, { passive: false });
+
+    apply(0);
+  }
+
+  initSkillScroll('ai-track', 'ai-prev', 'ai-next');
+  initSkillScroll('pt-track', 'pt-prev', 'pt-next');
+})();
+
+/* ---- GH CAROUSEL TOUCH / TRACKPAD SWIPE ------------------ */
+(function () {
+  const carousel = document.getElementById('gh-carousel');
+  const wrap = carousel?.parentElement;
+  if (!wrap || !carousel) return;
+
+  let startX = 0, startIdx = 0;
+
+  // Touch swipe
+  wrap.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startIdx = carouselIdx;
+  }, { passive: true });
+
+  wrap.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) < 30) return;
+    const maxIdx = ghRepos.length - cardsVisible();
+    if (dx < 0 && carouselIdx < maxIdx) { carouselIdx++; updateCarousel(); }
+    if (dx > 0 && carouselIdx > 0) { carouselIdx--; updateCarousel(); }
+  }, { passive: true });
+
+  // Trackpad horizontal scroll
+  wrap.addEventListener('wheel', e => {
+    if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) return;
+    e.preventDefault();
+    const maxIdx = ghRepos.length - cardsVisible();
+    if (e.deltaX > 18 && carouselIdx < maxIdx) { carouselIdx++; updateCarousel(); }
+    if (e.deltaX < -18 && carouselIdx > 0) { carouselIdx--; updateCarousel(); }
+  }, { passive: false });
+})();
