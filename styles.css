@@ -645,3 +645,16 @@ html{scroll-behavior:smooth}
   /* allow native horizontal swipe on touch & trackpad */
   -webkit-overflow-scrolling:touch;
 }
+
+/* ---- SKILL LOGO SVG --------------------------------------- */
+.skill-logo{
+  width:28px;height:28px;flex-shrink:0;
+  color:var(--text2);
+  transition:color .2s,transform .2s;
+}
+.skill-scroll-card:hover .skill-logo{
+  color:var(--purple);
+  transform:scale(1.1);
+}
+/* remove old emoji styles if present */
+.skill-scroll-icon{display:none}
