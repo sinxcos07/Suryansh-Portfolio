@@ -646,24 +646,27 @@ html{scroll-behavior:smooth}
   -webkit-overflow-scrolling:touch;
 }
 
-/* ---- SKILL LOGO SVG --------------------------------------- */
+/* ---- SKILL LOGO (img + inline SVG) --------------------- */
 .skill-logo{
   width:28px;height:28px;flex-shrink:0;
-  /* Force SVG to inherit white color - crucial for dark backgrounds */
-  color:#ffffff;
-  fill:#ffffff;
+  object-fit:contain;
+  /* invert black SVGs to white for dark background */
+  filter:brightness(0) invert(1);
+  opacity:0.75;
   transition:opacity .2s,transform .2s;
-  opacity:0.8;
+  /* also handles inline SVG fill */
+  color:#fff;fill:#fff;
 }
 .skill-scroll-card:hover .skill-logo{
   opacity:1;
   transform:scale(1.12);
 }
-/* Brand-colored logos (have inline style with explicit color) */
-.skill-scroll-card .skill-logo[style]{
-  opacity:0.9;
+/* Brand-colored icons — show real colors, no invert */
+.skill-scroll-card[data-brand="color"] .skill-logo{
+  filter:none;
+  opacity:0.85;
 }
-.skill-scroll-card:hover .skill-logo[style]{
+.skill-scroll-card[data-brand="color"]:hover .skill-logo{
   opacity:1;
 }
 .skill-scroll-icon{display:none}
