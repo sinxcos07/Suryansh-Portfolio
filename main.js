@@ -88,8 +88,8 @@ const nav = document.getElementById('nav');
 const scrollHint = document.querySelector('.scroll-hint');
 window.addEventListener('scroll', () => {
   const d = document.documentElement;
-  if (prog) prog.style.width = (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
-  if (nav) nav.classList.toggle('scrolled', d.scrollTop > 30);
+  prog.style.width = (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
+  nav.classList.toggle('scrolled', d.scrollTop > 30);
   
   // Fade out scroll hint when user scrolls
   if (scrollHint) {
@@ -106,20 +106,18 @@ window.addEventListener('scroll', () => {
 /* ---- MOBILE NAV ------------------------------------------- */
 const hamBtn = document.getElementById('ham-btn');
 const navLinks = document.getElementById('nav-links');
-if (hamBtn && navLinks) {
-  hamBtn.addEventListener('click', () => {
-    const open = navLinks.classList.toggle('open');
-    navLinks.classList.toggle('nav-links-desktop', !open);
-    hamBtn.setAttribute('aria-expanded', open);
+hamBtn.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+  navLinks.classList.toggle('nav-links-desktop', !open);
+  hamBtn.setAttribute('aria-expanded', open);
+});
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navLinks.classList.add('nav-links-desktop');
+    hamBtn.setAttribute('aria-expanded', 'false');
   });
-  navLinks.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-      navLinks.classList.remove('open');
-      navLinks.classList.add('nav-links-desktop');
-      hamBtn.setAttribute('aria-expanded', 'false');
-    });
-  });
-}
+});
 
 /* ---- SCROLL REVEAL ---------------------------------------- */
 const revEls = document.querySelectorAll('.reveal');
@@ -240,7 +238,6 @@ const carousel = document.getElementById('gh-carousel');
 const prevBtn = document.getElementById('gh-prev');
 const nextBtn = document.getElementById('gh-next');
 const cardsVisible = () => window.innerWidth < 640 ? 1 : window.innerWidth < 1024 ? 2 : 3;
-if (!carousel || !prevBtn || !nextBtn) { console.warn('GH carousel elements missing'); }
 
 let ghPixelOffset = 0;
 
@@ -265,11 +262,11 @@ function updateCarousel() {
   carouselIdx = Math.round(ghPixelOffset / cardW);
 }
 
-if (prevBtn) prevBtn.addEventListener('click', () => {
+prevBtn.addEventListener('click', () => {
   const cardW = (carousel.children[0]?.offsetWidth || 280) + 14;
   applyGhOffset(ghPixelOffset - cardW * 2);
 });
-if (nextBtn) nextBtn.addEventListener('click', () => {
+nextBtn.addEventListener('click', () => {
   const cardW = (carousel.children[0]?.offsetWidth || 280) + 14;
   applyGhOffset(ghPixelOffset + cardW * 2);
 });
@@ -311,18 +308,26 @@ function esc(s) {
 }
 
 async function fetchGH() {
-  try {
-    const res = await fetch('https://api.github.com/users/sinxcos07/repos?sort=updated&per_page=30&type=public');
-    if (!res.ok) throw new Error('API error');
-    const all = await res.json();
-    ghRepos = all.filter(r => !r.fork && !SKIP.some(s => r.name.toLowerCase().includes(s)));
+  const GH_URL = 'https://api.github.com/users/sinxcos07/repos?sort=updated&per_page=30&type=public';
+  const loadingEl = document.getElementById('gh-loading');
 
-    document.getElementById('gh-loading').remove();
+  async function tryFetch(url) {
+    const res = await fetch(url, { headers: { 'Accept': 'application/vnd.github.v3+json' } });
+    if (res.status === 403 || res.status === 429) throw new Error('rate_limit');
+    if (!res.ok) throw new Error('api_error');
+    return res.json();
+  }
+
+  function renderRepos(all) {
+    ghRepos = all.filter(r => !r.fork && !SKIP.some(s => r.name.toLowerCase().includes(s)));
+    if (loadingEl) loadingEl.remove();
     if (!ghRepos.length) {
-      document.querySelector('.gh-section').style.display = 'none';
+      const sec = document.querySelector('.gh-section');
+      if (sec) sec.style.display = 'none';
       return;
     }
-    document.getElementById('gh-count').textContent = `· ${ghRepos.length} repos`;
+    const countEl = document.getElementById('gh-count');
+    if (countEl) countEl.textContent = `· ${ghRepos.length} repos`;
 
     ghRepos.forEach(repo => {
       const icon = ICONS[repo.language] || ICONS['default'];
@@ -342,16 +347,27 @@ async function fetchGH() {
       card.addEventListener('click', () => window.open(repo.html_url, '_blank', 'noopener'));
       card.addEventListener('mouseenter', () => document.body.classList.add('ch'));
       card.addEventListener('mouseleave', () => document.body.classList.remove('ch'));
-      carousel.appendChild(card);
+      if (carousel) carousel.appendChild(card);
     });
 
-    prevBtn.disabled = true;
-    nextBtn.disabled = ghRepos.length <= cardsVisible();
+    if (prevBtn) prevBtn.disabled = true;
+    if (nextBtn) nextBtn.disabled = ghRepos.length <= cardsVisible();
     updateCarousel();
     if (window._ghAttachScroll) window._ghAttachScroll();
+  }
+
+  try {
+    const data = await tryFetch(GH_URL);
+    renderRepos(data);
   } catch (e) {
-    const el = document.getElementById('gh-loading');
-    if (el) el.textContent = 'Could not load repos — visit github.com/sinxcos07';
+    // Rate limited — show friendly message with direct link
+    if (loadingEl) {
+      if (e.message === 'rate_limit') {
+        loadingEl.innerHTML = `GitHub API rate limit hit. <a href="https://github.com/sinxcos07?tab=repositories" target="_blank" rel="noopener" style="color:var(--purple);text-decoration:underline">View repos on GitHub ↗</a>`;
+      } else {
+        loadingEl.innerHTML = `Couldn't load repos. <a href="https://github.com/sinxcos07?tab=repositories" target="_blank" rel="noopener" style="color:var(--purple);text-decoration:underline">Visit github.com/sinxcos07 ↗</a>`;
+      }
+    }
   }
 }
 fetchGH();
@@ -427,4 +443,3 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   initSkillScroll('ai-track', 'ai-prev', 'ai-next');
   initSkillScroll('pt-track', 'pt-prev', 'pt-next');
 })();
-

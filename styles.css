@@ -105,10 +105,10 @@ nav{
   position:fixed;top:0;left:0;right:0;z-index:500;
   padding:0 clamp(16px,4vw,72px);height:60px;
   display:flex;align-items:center;justify-content:space-between;
+  gap:0;
   border-bottom:1px solid transparent;
   transition:background .4s,border-color .4s;
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
+  overflow:visible;
 }
 nav.scrolled{
   background:rgba(2,0,8,0.8);
@@ -117,7 +117,7 @@ nav.scrolled{
 }
 .nav-logo{font-family:var(--mono);font-size:14px;color:rgba(255,255,255,0.45);text-decoration:none;letter-spacing:.06em;transition:color .2s}
 .nav-logo:hover{color:var(--text)}
-.nav-links{list-style:none;display:flex;gap:26px;align-items:center}
+.nav-links{list-style:none;display:flex;gap:26px;align-items:center;flex:1;justify-content:center}
 .nav-links a{font-size:14px;color:#c0c0d0;text-decoration:none;transition:color .2s;letter-spacing:.02em}
 .nav-links a:hover{color:#fff}
 .nav-cta{
@@ -136,8 +136,8 @@ nav.scrolled{
   .nav-status{display:none}
   .nav-hamburger{display:block}
   .nav-links.open{
-    display:flex !important;flex-direction:column;
-    position:fixed;top:60px;left:0;right:0;z-index:9999;
+    display:flex !important;flex-direction:column;justify-content:flex-start;flex:unset;
+    position:fixed !important;top:60px;left:0;right:0;z-index:9999;
     background:rgba(2,0,12,0.98);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
     padding:28px clamp(16px,4vw,72px);gap:22px;
     border-bottom:1px solid var(--border);
