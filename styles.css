@@ -155,9 +155,9 @@ nav.scrolled{
 
 /* ---- HERO ------------------------------------------------- */
 #hero{
-  position:relative;min-height:100vh;min-height:100svh;overflow:hidden;
+  position:relative;min-height:100vh;overflow:hidden;
   display:flex;flex-direction:column;justify-content:center;
-  padding:0 clamp(16px,4vw,72px);padding-top:clamp(60px,8vw,80px);padding-bottom:clamp(40px,6vw,60px);z-index:1;
+  padding:0 clamp(16px,4vw,72px);padding-top:clamp(60px,8vw,80px);z-index:1;
 }
 .hero-grid{
   position:absolute;inset:0;z-index:0;
@@ -649,40 +649,24 @@ html{scroll-behavior:smooth}
 /* ---- SKILL LOGO SVG --------------------------------------- */
 .skill-logo{
   width:28px;height:28px;flex-shrink:0;
-  /* Force SVG to inherit white color - crucial for dark backgrounds */
-  color:#ffffff;
-  fill:#ffffff;
-  transition:opacity .2s,transform .2s;
+  object-fit:contain;
+  /* Turn black SVG icons white on dark background */
+  filter:brightness(0) invert(1);
   opacity:0.8;
+  transition:opacity .2s,transform .2s;
+  /* fallback for inline SVGs */
+  color:#ffffff;fill:#ffffff;
 }
 .skill-scroll-card:hover .skill-logo{
   opacity:1;
   transform:scale(1.12);
 }
-/* Brand-colored logos (have inline style with explicit color) */
-.skill-scroll-card .skill-logo[style]{
+/* Brand-colored icons (Git, Figma, Canva) — show real colors */
+.skill-scroll-card[data-brand="color"] .skill-logo{
+  filter:none;
   opacity:0.9;
 }
-.skill-scroll-card:hover .skill-logo[style]{
+.skill-scroll-card[data-brand="color"]:hover .skill-logo{
   opacity:1;
 }
 .skill-scroll-icon{display:none}
-
-/* ---- HERO HEIGHT FIX: tablet & mobile -------------------- */
-/* iPad portrait/landscape and similar */
-@media(max-width:1100px){
-  #hero{
-    min-height:0;
-    height:auto;
-    padding-top:clamp(80px,12vw,100px);
-    padding-bottom:clamp(48px,8vw,72px);
-    justify-content:flex-start;
-  }
-}
-/* Phone */
-@media(max-width:640px){
-  #hero{
-    padding-top:80px;
-    padding-bottom:clamp(36px,8vw,56px);
-  }
-}
