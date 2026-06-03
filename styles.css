@@ -46,7 +46,9 @@ body{
     radial-gradient(ellipse 50% 60% at 10% 70%,rgba(176,136,255,0.06) 0%,transparent 50%);
   background-attachment:fixed;
 }
-@media(max-width:768px){body{cursor:auto}}
+@media(max-width:768px){body{cursor:auto}
+  #hero{min-height:auto;padding-top:80px;padding-bottom:clamp(40px,8vw,60px)}
+}
 
 /* ---- STARFIELD -------------------------------------------- */
 #starfield{
@@ -155,7 +157,7 @@ nav.scrolled{
 
 /* ---- HERO ------------------------------------------------- */
 #hero{
-  position:relative;min-height:100vh;overflow:hidden;
+  position:relative;min-height:100vh;min-height:100svh;overflow:hidden;
   display:flex;flex-direction:column;justify-content:center;
   padding:0 clamp(16px,4vw,72px);padding-top:clamp(60px,8vw,80px);z-index:1;
 }
@@ -274,7 +276,7 @@ nav.scrolled{
 .btn:hover svg{transform:translate(1px,-1px)}
 
 /* ---- SECTIONS COMMON -------------------------------------- */
-section{padding:clamp(36px,5vw,64px) clamp(16px,4vw,72px);position:relative;z-index:1}
+section{padding:clamp(60px,12vw,110px) clamp(16px,4vw,72px);position:relative;z-index:1}
 .section-label{
   font-family:var(--mono);font-size:clamp(10px,1.5vw,11px);letter-spacing:.16em;
   color:#b088ff;text-transform:uppercase;margin-bottom:10px;
@@ -283,7 +285,7 @@ section{padding:clamp(36px,5vw,64px) clamp(16px,4vw,72px);position:relative;z-in
 .section-label::before{content:'';width:24px;height:1px;background:#b088ff}
 .section-title{
   font-size:clamp(28px,5vw,58px);font-weight:700;
-  letter-spacing:-.03em;line-height:1.04;margin-bottom:clamp(28px,5vw,44px);
+  letter-spacing:-.03em;line-height:1.04;margin-bottom:clamp(40px,8vw,64px);
 }
 .section-title .muted{color:var(--text3)}
 .divider{height:1px;background:var(--border);margin:0 clamp(16px,4vw,72px);position:relative;z-index:1}
@@ -667,3 +669,7 @@ html{scroll-behavior:smooth}
   opacity:1;
 }
 .skill-scroll-icon{display:none}
+
+@media(min-width:769px) and (max-width:1100px){
+  #hero{min-height:auto;min-height:auto;padding-top:90px;padding-bottom:clamp(48px,8vw,72px)}
+}
