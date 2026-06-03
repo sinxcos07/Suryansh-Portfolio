@@ -105,10 +105,10 @@ nav{
   position:fixed;top:0;left:0;right:0;z-index:500;
   padding:0 clamp(16px,4vw,72px);height:60px;
   display:flex;align-items:center;justify-content:space-between;
-  gap:0;
   border-bottom:1px solid transparent;
   transition:background .4s,border-color .4s;
-  overflow:visible;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
 }
 nav.scrolled{
   background:rgba(2,0,8,0.8);
@@ -117,7 +117,7 @@ nav.scrolled{
 }
 .nav-logo{font-family:var(--mono);font-size:14px;color:rgba(255,255,255,0.45);text-decoration:none;letter-spacing:.06em;transition:color .2s}
 .nav-logo:hover{color:var(--text)}
-.nav-links{list-style:none;display:flex;gap:26px;align-items:center;flex:1;justify-content:center}
+.nav-links{list-style:none;display:flex;gap:26px;align-items:center}
 .nav-links a{font-size:14px;color:#c0c0d0;text-decoration:none;transition:color .2s;letter-spacing:.02em}
 .nav-links a:hover{color:#fff}
 .nav-cta{
@@ -136,8 +136,8 @@ nav.scrolled{
   .nav-status{display:none}
   .nav-hamburger{display:block}
   .nav-links.open{
-    display:flex !important;flex-direction:column;justify-content:flex-start;flex:unset;
-    position:fixed !important;top:60px;left:0;right:0;z-index:9999;
+    display:flex !important;flex-direction:column;
+    position:fixed;top:60px;left:0;right:0;z-index:9999;
     background:rgba(2,0,12,0.98);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
     padding:28px clamp(16px,4vw,72px);gap:22px;
     border-bottom:1px solid var(--border);
@@ -274,7 +274,7 @@ nav.scrolled{
 .btn:hover svg{transform:translate(1px,-1px)}
 
 /* ---- SECTIONS COMMON -------------------------------------- */
-section{padding:clamp(60px,12vw,110px) clamp(16px,4vw,72px);position:relative;z-index:1}
+section{padding:clamp(36px,5vw,64px) clamp(16px,4vw,72px);position:relative;z-index:1}
 .section-label{
   font-family:var(--mono);font-size:clamp(10px,1.5vw,11px);letter-spacing:.16em;
   color:#b088ff;text-transform:uppercase;margin-bottom:10px;
@@ -283,7 +283,7 @@ section{padding:clamp(60px,12vw,110px) clamp(16px,4vw,72px);position:relative;z-
 .section-label::before{content:'';width:24px;height:1px;background:#b088ff}
 .section-title{
   font-size:clamp(28px,5vw,58px);font-weight:700;
-  letter-spacing:-.03em;line-height:1.04;margin-bottom:clamp(40px,8vw,64px);
+  letter-spacing:-.03em;line-height:1.04;margin-bottom:clamp(28px,5vw,44px);
 }
 .section-title .muted{color:var(--text3)}
 .divider{height:1px;background:var(--border);margin:0 clamp(16px,4vw,72px);position:relative;z-index:1}
@@ -646,27 +646,24 @@ html{scroll-behavior:smooth}
   -webkit-overflow-scrolling:touch;
 }
 
-/* ---- SKILL LOGO (img + inline SVG) --------------------- */
+/* ---- SKILL LOGO SVG --------------------------------------- */
 .skill-logo{
   width:28px;height:28px;flex-shrink:0;
-  object-fit:contain;
-  /* invert black SVGs to white for dark background */
-  filter:brightness(0) invert(1);
-  opacity:0.75;
+  /* Force SVG to inherit white color - crucial for dark backgrounds */
+  color:#ffffff;
+  fill:#ffffff;
   transition:opacity .2s,transform .2s;
-  /* also handles inline SVG fill */
-  color:#fff;fill:#fff;
+  opacity:0.8;
 }
 .skill-scroll-card:hover .skill-logo{
   opacity:1;
   transform:scale(1.12);
 }
-/* Brand-colored icons — show real colors, no invert */
-.skill-scroll-card[data-brand="color"] .skill-logo{
-  filter:none;
-  opacity:0.85;
+/* Brand-colored logos (have inline style with explicit color) */
+.skill-scroll-card .skill-logo[style]{
+  opacity:0.9;
 }
-.skill-scroll-card[data-brand="color"]:hover .skill-logo{
+.skill-scroll-card:hover .skill-logo[style]{
   opacity:1;
 }
 .skill-scroll-icon{display:none}
