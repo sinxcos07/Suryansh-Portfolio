@@ -59,19 +59,53 @@
   const tr = document.getElementById('cursor-trail');
   if (!cur || !tr) return;
 
-  let mx = 0, my = 0, tx = 0, ty = 0;
+  let mx = -200, my = -200, tx = -200, ty = -200;
+  let hasMovedOnce = false;
+  let rafId = null;
+
+  // Hide cursors until mouse actually moves on THIS page visit
+  cur.style.opacity = '0';
+  tr.style.opacity = '0';
+
   document.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
+    if (!hasMovedOnce) {
+      // Snap trail to cursor instantly on first move to avoid slide-in from corner
+      tx = mx; ty = my;
+      cur.style.opacity = '';
+      tr.style.opacity = '';
+      hasMovedOnce = true;
+    }
     cur.style.left = mx + 'px';
     cur.style.top = my + 'px';
   });
-  (function lerp() {
+
+  function lerp() {
     tx += (mx - tx) * 0.12;
     ty += (my - ty) * 0.12;
     tr.style.left = tx + 'px';
     tr.style.top = ty + 'px';
-    requestAnimationFrame(lerp);
-  })();
+    rafId = requestAnimationFrame(lerp);
+  }
+
+  // Pause when tab hidden, resume when visible — prevents stale lerp on return
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    } else {
+      // Snap trail to current cursor position so it doesn't drift from old spot
+      tx = mx; ty = my;
+      if (!rafId) rafId = requestAnimationFrame(lerp);
+    }
+  });
+
+  // Also snap on page show (back-forward cache)
+  window.addEventListener('pageshow', () => {
+    tx = mx; ty = my;
+    if (!rafId) rafId = requestAnimationFrame(lerp);
+  });
+
+  rafId = requestAnimationFrame(lerp);
 
   const hoverTargets = 'a,button,.project-card,.contact-card,.about-card,.exp-item,.timeline-card,.gh-card,.gh-arrow';
   document.querySelectorAll(hoverTargets).forEach(el => {
