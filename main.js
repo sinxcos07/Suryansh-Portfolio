@@ -124,31 +124,21 @@ function openNav() {
   navLinks.classList.add('open');
   document.body.classList.add('nav-open');
   hamBtn.setAttribute('aria-expanded', 'true');
-  hamIcon.style.display = 'none';
-  closeIcon.style.display = 'block';
+  if (hamIcon) hamIcon.style.display = 'none';
+  if (closeIcon) closeIcon.style.display = 'block';
 }
-
 function closeNav() {
   navLinks.classList.remove('open');
   document.body.classList.remove('nav-open');
   hamBtn.setAttribute('aria-expanded', 'false');
-  hamIcon.style.display = 'block';
-  closeIcon.style.display = 'none';
+  if (hamIcon) hamIcon.style.display = 'block';
+  if (closeIcon) closeIcon.style.display = 'none';
 }
-
 hamBtn.addEventListener('click', () => {
   navLinks.classList.contains('open') ? closeNav() : openNav();
 });
-
-// Close when a nav link is clicked
-navLinks.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', closeNav);
-});
-
-// Close on Escape key
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeNav();
-});
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
 
 /* ---- SCROLL REVEAL ---------------------------------------- */
 const revEls = document.querySelectorAll('.reveal');
