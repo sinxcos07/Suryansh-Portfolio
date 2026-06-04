@@ -130,15 +130,19 @@ navLinks.querySelectorAll('a').forEach(a => {
 
 /* ---- SCROLL REVEAL ---------------------------------------- */
 const revEls = document.querySelectorAll('.reveal');
-const revObs = new IntersectionObserver(entries => {
-  entries.forEach(en => {
-    if (en.isIntersecting) {
-      en.target.classList.add('visible');
-      revObs.unobserve(en.target);
-    }
-  });
-}, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
-revEls.forEach(el => revObs.observe(el));
+if (window.matchMedia('(max-width:768px)').matches) {
+  revEls.forEach(el => el.classList.add('visible'));
+} else {
+  const revObs = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        en.target.classList.add('visible');
+        revObs.unobserve(en.target);
+      }
+    });
+  }, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
+  revEls.forEach(el => revObs.observe(el));
+}
 
 /* ---- MOUSE LIGHT IN HERO ---------------------------------- */
 const ml = document.getElementById('mouse-light');
