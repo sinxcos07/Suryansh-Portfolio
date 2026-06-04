@@ -292,16 +292,18 @@ section{padding:clamp(60px,12vw,110px) clamp(16px,4vw,72px);position:relative;z-
 .divider{height:1px;background:var(--border);margin:0 clamp(16px,4vw,72px);position:relative;z-index:1}
 
 /* ---- REVEAL ANIMATIONS ------------------------------------ */
-.reveal{opacity:0;transform:translateY(36px);transition:opacity .8s var(--expo),transform .8s var(--expo)}
-.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal{opacity:1;transform:translateY(0)}
 .rd1{transition-delay:.08s}
 .rd2{transition-delay:.16s}
 .rd3{transition-delay:.24s}
 .rd4{transition-delay:.32s}
 .rd5{transition-delay:.40s}
+@media(min-width:769px){
+  .reveal{opacity:0;transform:translateY(36px);transition:opacity .8s var(--expo),transform .8s var(--expo)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+}
 @media(max-width:768px){
-  .reveal,.reveal.visible{opacity:1;transform:none;transition:none}
-  .rd1,.rd2,.rd3,.rd4,.rd5{transition-delay:0s}
+  .reveal,.reveal.visible{opacity:1 !important;transform:none !important;transition:none !important}
 }
 
 /* ---- ABOUT ------------------------------------------------ */
