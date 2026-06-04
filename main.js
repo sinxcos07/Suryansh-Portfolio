@@ -117,15 +117,37 @@ window.addEventListener('scroll', () => {
 /* ---- MOBILE NAV ------------------------------------------- */
 const hamBtn = document.getElementById('ham-btn');
 const navLinks = document.getElementById('nav-links');
+const hamIcon = hamBtn.querySelector('.ham-icon');
+const closeIcon = hamBtn.querySelector('.close-icon');
+
+function openNav() {
+  navLinks.classList.add('open');
+  document.body.classList.add('nav-open');
+  hamBtn.setAttribute('aria-expanded', 'true');
+  hamIcon.style.display = 'none';
+  closeIcon.style.display = 'block';
+}
+
+function closeNav() {
+  navLinks.classList.remove('open');
+  document.body.classList.remove('nav-open');
+  hamBtn.setAttribute('aria-expanded', 'false');
+  hamIcon.style.display = 'block';
+  closeIcon.style.display = 'none';
+}
+
 hamBtn.addEventListener('click', () => {
-  const open = navLinks.classList.toggle('open');
-  hamBtn.setAttribute('aria-expanded', open);
+  navLinks.classList.contains('open') ? closeNav() : openNav();
 });
+
+// Close when a nav link is clicked
 navLinks.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-    hamBtn.setAttribute('aria-expanded', 'false');
-  });
+  a.addEventListener('click', closeNav);
+});
+
+// Close on Escape key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeNav();
 });
 
 /* ---- SCROLL REVEAL ---------------------------------------- */

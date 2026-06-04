@@ -130,22 +130,98 @@ nav.scrolled{
 .nav-status{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12px;color:var(--text2);letter-spacing:.06em}
 .status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:pulse 2.5s infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 10px var(--green)}50%{box-shadow:0 0 4px var(--green)}}
-.nav-hamburger{display:none;background:none;border:none;cursor:pointer;color:var(--text2);padding:8px}
-@media(max-width:768px){
-  .nav-links-desktop:not(.open){display:none !important}
-  .nav-links:not(.open){display:none !important}
-  .nav-status{display:none}
-  .nav-hamburger{display:block}
-  .nav-links.open{
-    display:flex !important;flex-direction:column;
-    position:fixed;top:60px;left:0;right:0;z-index:9999;
-    background:rgba(2,0,12,0.98);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-    padding:28px clamp(16px,4vw,72px);gap:22px;
-    border-bottom:1px solid var(--border);
-    animation:slideDown .3s var(--expo) forwards;
-  }
-  .nav-links.open li a{font-size:17px;opacity:1}
+.nav-hamburger{
+  display:none;background:none;border:none;cursor:pointer;
+  color:var(--text2);padding:8px;z-index:10001;position:relative;
 }
+
+/* ---- MOBILE FULLSCREEN OVERLAY ---------------------------- */
+@media(max-width:768px){
+  .nav-status{display:none}
+  .nav-hamburger{display:flex;align-items:center;justify-content:center}
+
+  /* Hide desktop links on mobile always */
+  .nav-links-desktop{display:none !important}
+
+  /* The overlay itself */
+  .nav-links{
+    display:flex !important;
+    flex-direction:column;
+    justify-content:center;
+    align-items:flex-start;
+    gap:0;
+    list-style:none;
+
+    /* Fullscreen fixed overlay — covers viewport regardless of scroll */
+    position:fixed;
+    inset:0;
+    z-index:10000;
+
+    background:rgba(2,0,10,0.97);
+    backdrop-filter:blur(28px);
+    -webkit-backdrop-filter:blur(28px);
+
+    padding:80px clamp(32px,8vw,64px) 48px;
+
+    /* Hidden by default */
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(-16px);
+    transition:opacity .35s cubic-bezier(0.16,1,0.3,1),
+                transform .35s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  /* Open state */
+  .nav-links.open{
+    opacity:1;
+    pointer-events:auto;
+    transform:translateY(0);
+  }
+
+  /* Each nav item */
+  .nav-links li{
+    width:100%;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+    opacity:0;
+    transform:translateY(12px);
+    transition:opacity .3s ease, transform .3s ease;
+  }
+  .nav-links.open li:nth-child(1){opacity:1;transform:none;transition-delay:.08s}
+  .nav-links.open li:nth-child(2){opacity:1;transform:none;transition-delay:.13s}
+  .nav-links.open li:nth-child(3){opacity:1;transform:none;transition-delay:.18s}
+  .nav-links.open li:nth-child(4){opacity:1;transform:none;transition-delay:.23s}
+  .nav-links.open li:nth-child(5){opacity:1;transform:none;transition-delay:.28s}
+  .nav-links.open li:nth-child(6){opacity:1;transform:none;transition-delay:.33s}
+
+  .nav-links li a{
+    display:block;
+    padding:18px 0;
+    font-size:clamp(22px,6vw,28px);
+    font-weight:600;
+    color:rgba(255,255,255,0.85);
+    text-decoration:none;
+    letter-spacing:-.02em;
+    transition:color .2s;
+  }
+  .nav-links li a:hover{color:#fff}
+
+  /* Override nav-cta pill style inside mobile menu */
+  .nav-links .nav-cta{
+    background:none;
+    border:none;
+    padding:18px 0;
+    font-size:clamp(22px,6vw,28px);
+    font-weight:600;
+    font-family:var(--font);
+    color:rgba(255,255,255,0.5);
+    letter-spacing:-.02em;
+    border-radius:0;
+  }
+
+  /* Scroll lock */
+  body.nav-open{overflow:hidden}
+}
+
 @keyframes slideDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
@@ -293,7 +369,11 @@ section{padding:clamp(60px,12vw,110px) clamp(16px,4vw,72px);position:relative;z-
 
 /* ---- REVEAL ANIMATIONS ------------------------------------ */
 .reveal{opacity:1;transform:none}
-.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal.visible{opacity:1;transform:none}
+@media(min-width:769px){
+  .reveal{opacity:0;transform:translateY(36px);transition:opacity .8s var(--expo),transform .8s var(--expo)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+}
 .rd1{transition-delay:.08s}
 .rd2{transition-delay:.16s}
 .rd3{transition-delay:.24s}
