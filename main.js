@@ -137,7 +137,7 @@ const revObs = new IntersectionObserver(entries => {
       revObs.unobserve(en.target);
     }
   });
-}, { threshold: 0.08, rootMargin: '0px 0px -48px 0px' });
+}, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
 revEls.forEach(el => revObs.observe(el));
 
 /* ---- MOUSE LIGHT IN HERO ---------------------------------- */
