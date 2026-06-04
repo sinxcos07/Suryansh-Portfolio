@@ -108,13 +108,11 @@ const hamBtn = document.getElementById('ham-btn');
 const navLinks = document.getElementById('nav-links');
 hamBtn.addEventListener('click', () => {
   const open = navLinks.classList.toggle('open');
-  navLinks.classList.toggle('nav-links-desktop', !open);
   hamBtn.setAttribute('aria-expanded', open);
 });
 navLinks.querySelectorAll('a').forEach(a => {
   a.addEventListener('click', () => {
     navLinks.classList.remove('open');
-    navLinks.classList.add('nav-links-desktop');
     hamBtn.setAttribute('aria-expanded', 'false');
   });
 });

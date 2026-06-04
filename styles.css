@@ -133,6 +133,7 @@ nav.scrolled{
 .nav-hamburger{display:none;background:none;border:none;cursor:pointer;color:var(--text2);padding:8px}
 @media(max-width:768px){
   .nav-links-desktop{display:none !important}
+  .nav-links:not(.open){display:none !important}
   .nav-status{display:none}
   .nav-hamburger{display:block}
   .nav-links.open{
