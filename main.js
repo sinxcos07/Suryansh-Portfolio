@@ -73,10 +73,21 @@
     requestAnimationFrame(lerp);
   })();
 
-  const hoverTargets = 'a,button,.project-card,.contact-card,.about-card,.exp-item,.timeline-card,.gh-card,.gh-arrow';
-  document.querySelectorAll(hoverTargets).forEach(el => {
-    el.addEventListener('mouseenter', () => document.body.classList.add('ch'));
-    el.addEventListener('mouseleave', () => document.body.classList.remove('ch'));
+  // Use event delegation so dynamic elements (gh-cards) are covered
+  // and the ch class never gets stuck
+  const hoverSelector = 'a,button,.project-card,.contact-card,.about-card,.exp-item,.timeline-card,.gh-card,.gh-arrow';
+  document.addEventListener('mouseover', e => {
+    if (e.target.closest(hoverSelector)) {
+      document.body.classList.add('ch');
+    } else {
+      document.body.classList.remove('ch');
+    }
+  });
+  document.addEventListener('mouseout', e => {
+    // Only remove if we're leaving the document entirely
+    if (!e.relatedTarget || e.relatedTarget === document.documentElement) {
+      document.body.classList.remove('ch');
+    }
   });
   document.addEventListener('mousedown', () => document.body.classList.add('cc'));
   document.addEventListener('mouseup', () => document.body.classList.remove('cc'));
@@ -343,8 +354,6 @@ async function fetchGH() {
           <span class="gh-lang" style="color:var(--blue);font-size:11px">↗ View</span>
         </div>`;
       card.addEventListener('click', () => window.open(repo.html_url, '_blank', 'noopener'));
-      card.addEventListener('mouseenter', () => document.body.classList.add('ch'));
-      card.addEventListener('mouseleave', () => document.body.classList.remove('ch'));
       if (carousel) carousel.appendChild(card);
     });
 
