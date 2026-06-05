@@ -89,9 +89,10 @@ body.cc #cursor{transform:translate(-50%,-50%) scale(0.55)}
 
 /* ---- SCROLL PROGRESS BAR ---------------------------------- */
 #progress-bar{
-  position:fixed;top:0;left:0;height:1px;width:0%;
+  position:fixed;top:0;left:0;height:2.5px;width:0%;
   background:linear-gradient(90deg,var(--blue),var(--purple),var(--blue));
   background-size:200%;z-index:9000;animation:shb 3s linear infinite;
+  box-shadow:0 0 8px var(--blue),0 0 2px var(--purple);
 }
 @keyframes shb{0%{background-position:0%}100%{background-position:200%}}
 
