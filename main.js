@@ -116,28 +116,41 @@ window.addEventListener('scroll', () => {
 
 /* ---- MOBILE NAV ------------------------------------------- */
 const hamBtn = document.getElementById('ham-btn');
-const navLinks = document.getElementById('nav-links');
+const navLinks = document.getElementById('nav-links'); // desktop (kept for reference)
+const mobileOverlay = document.getElementById('mobile-nav-overlay');
 const hamIcon = hamBtn.querySelector('.ham-icon');
 const closeIcon = hamBtn.querySelector('.close-icon');
 
+let scrollY = 0; // saved scroll position for iOS scroll-lock fix
+
 function openNav() {
-  navLinks.classList.add('open');
+  // Save scroll position before locking
+  scrollY = window.scrollY;
+  document.body.style.top = `-${scrollY}px`;
+
+  mobileOverlay.classList.add('open');
+  mobileOverlay.setAttribute('aria-hidden', 'false');
   document.body.classList.add('nav-open');
   hamBtn.setAttribute('aria-expanded', 'true');
   if (hamIcon) hamIcon.style.display = 'none';
   if (closeIcon) closeIcon.style.display = 'block';
 }
 function closeNav() {
-  navLinks.classList.remove('open');
+  mobileOverlay.classList.remove('open');
+  mobileOverlay.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('nav-open');
   hamBtn.setAttribute('aria-expanded', 'false');
   if (hamIcon) hamIcon.style.display = 'block';
   if (closeIcon) closeIcon.style.display = 'none';
+
+  // Restore scroll position after unlocking
+  document.body.style.top = '';
+  window.scrollTo({ top: scrollY, behavior: 'instant' });
 }
 hamBtn.addEventListener('click', () => {
-  navLinks.classList.contains('open') ? closeNav() : openNav();
+  mobileOverlay.classList.contains('open') ? closeNav() : openNav();
 });
-navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+mobileOverlay.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
 
 /* ---- SCROLL REVEAL ---------------------------------------- */
