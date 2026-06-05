@@ -149,6 +149,18 @@ nav.scrolled{
   pointer-events:auto;
   transform:translateY(0);
 }
+/* Close button inside the overlay — always visible and clickable */
+.mobile-nav-close{
+  position:absolute;
+  top:18px;right:clamp(16px,4vw,28px);
+  background:none;border:none;cursor:pointer;
+  color:rgba(255,255,255,0.7);
+  padding:8px;
+  display:flex;align-items:center;justify-content:center;
+  transition:color .2s;
+  z-index:1;
+}
+.mobile-nav-close:hover{color:#fff}
 .mobile-nav-links{
   list-style:none;
   display:flex;

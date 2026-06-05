@@ -150,6 +150,7 @@ function closeNav() {
 hamBtn.addEventListener('click', () => {
   mobileOverlay.classList.contains('open') ? closeNav() : openNav();
 });
+document.getElementById('mobile-nav-close').addEventListener('click', closeNav);
 mobileOverlay.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
 
